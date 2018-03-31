@@ -81,13 +81,14 @@ class MainActivity : AppCompatActivity() {
             textView.text=stack.listTmp.joinToString(separator = "")
         }
         buttonEnter.setOnClickListener(){
-            if(stack.listTmp.size==0){
+            if(stack.listTmp.size==0 && stack.list.lastIndex>=0 ){
+
                 stack.list.add(stack.list.get(stack.list.lastIndex))
                 val listView = findViewById<ListView>(R.id.listView)
                 listView.adapter = MyCustomAdapter(this, stack.list)
 
                     }
-            else{
+            else if (stack.listTmp.size!=0  ){
                 var y  = stack.listTmp.joinToString(separator = "")
             stack.list.add(y.toDouble())
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
@@ -99,6 +100,7 @@ class MainActivity : AppCompatActivity() {
        buttonPlus.setOnClickListener(){
            val listHelp = stack.list.clone() as ArrayList<Double>
            stack.History.add(listHelp)
+           if(stack.list.lastIndex>=1)
            stack.addiction(stack)
            Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
            val listView = findViewById<ListView>(R.id.listView)
@@ -107,6 +109,7 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=1)
             stack.subtraction(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -116,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         buttonMultiply.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=1)
             stack.multiplication(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -124,6 +128,7 @@ class MainActivity : AppCompatActivity() {
         buttonDivision.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=1)
             stack.division(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -132,6 +137,7 @@ class MainActivity : AppCompatActivity() {
         buttonSqrt.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=0)
             stack.sqrt(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -140,6 +146,7 @@ class MainActivity : AppCompatActivity() {
         buttonPow.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=1)
             stack.pow(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -155,6 +162,7 @@ class MainActivity : AppCompatActivity() {
         buttonDrop.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=0)
             stack.drop(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -163,6 +171,7 @@ class MainActivity : AppCompatActivity() {
         buttonSwap.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=1)
             stack.swap(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
@@ -171,20 +180,23 @@ class MainActivity : AppCompatActivity() {
         buttonPlusMinus.setOnClickListener(){
             val listHelp = stack.list.clone()  as ArrayList<Double>
             stack.History.add(listHelp)
+            if(stack.list.lastIndex>=0)
             stack.plusMinus(stack)
             Toast.makeText(getApplicationContext(), "stos " + stack.list ,Toast.LENGTH_LONG ).show();
             val listView = findViewById<ListView>(R.id.listView)
             listView.adapter = MyCustomAdapter(this, stack.list)
         }
         buttonDel.setOnClickListener(){
+            if(stack.listTmp.lastIndex>=0)
             stack.listTmp.removeAt(stack.listTmp.lastIndex)
             textView.text=stack.listTmp.joinToString(separator = "")
         }
         buttonUndo.setOnClickListener(){
             Toast.makeText(getApplicationContext(), "stos " + stack.History ,Toast.LENGTH_LONG ).show();
             stack.list.clear()
-            stack.list.addAll(stack.History.get(stack.History.lastIndex))
-            stack.History.removeAt(stack.History.lastIndex)
+            if(stack.History.lastIndex>=1){
+                stack.list.addAll(stack.History.get(stack.History.lastIndex))
+            stack.History.removeAt(stack.History.lastIndex)}
             val listView = findViewById<ListView>(R.id.listView)
             listView.adapter = MyCustomAdapter(this, stack.list)
         }
