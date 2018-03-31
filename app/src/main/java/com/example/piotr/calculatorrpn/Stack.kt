@@ -3,16 +3,19 @@ package com.example.piotr.calculatorrpn
 
 class Stack {
 
-    var list: ArrayList<Double> = ArrayList()
-    var listTmp: ArrayList<String> = ArrayList()
+    var list = ArrayList<Double>()
+    var listTmp = ArrayList<String>()
+    var History = ArrayList<ArrayList<Double>>()
 
     fun addiction( stack : Stack){
+
         val a = stack.list.get(stack.list.lastIndex)
         val b = stack.list.get(stack.list.lastIndex-1)
         val result = a+b
         stack.list.removeAt(stack.list.lastIndex-1)
         stack.list.removeAt(stack.list.lastIndex)
         stack.list.add(result)
+
     }
     fun subtraction( stack : Stack){
         val a = stack.list.get(stack.list.lastIndex)
@@ -36,6 +39,7 @@ class Stack {
         val result = a/b
         stack.list.removeAt(stack.list.lastIndex-1)
         stack.list.removeAt(stack.list.lastIndex)
+        stack.list.add(result)
     }
     fun sqrt(stack : Stack){
         val a = stack.list.get(stack.list.lastIndex)
