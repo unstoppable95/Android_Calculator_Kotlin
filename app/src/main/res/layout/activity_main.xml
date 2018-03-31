@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/Screen"
     tools:context=".MainActivity">
 
     <Button
@@ -284,7 +285,6 @@
         android:layout_marginLeft="52dp"
         android:layout_marginStart="52dp"
         android:layout_marginTop="240dp"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

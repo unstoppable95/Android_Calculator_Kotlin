@@ -1,14 +1,15 @@
 package com.example.piotr.calculatorrpn
 
+import java.io.Serializable
 
-class Stack {
+
+class Stack : Serializable {
 
     var list = ArrayList<Double>()
     var listTmp = ArrayList<String>()
     var History = ArrayList<ArrayList<Double>>()
 
     fun addiction( stack : Stack){
-
         val a = stack.list.get(stack.list.lastIndex)
         val b = stack.list.get(stack.list.lastIndex-1)
         val result = a+b
