@@ -5,24 +5,17 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Layout
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.function.DoubleBinaryOperator
-import android.widget.RelativeLayout
-import android.graphics.Color.parseColor
-import android.app.Activity
-import android.icu.text.NumberFormat
-import android.util.Log
-import java.math.RoundingMode
+
 
 
 class MainActivity : AppCompatActivity() {
 
     var stack = Stack()
-    var prec :Int = 1
+    var prec :Int = 2
     var backgroundLayoutColor: String =""
     var backgroundStackColor : String = ""
 
@@ -219,9 +212,20 @@ class MainActivity : AppCompatActivity() {
         private val nContext: Context
         private val nlist: ArrayList<Double>
         private val precNum :Int
+
         init{
             nContext = context
-            nlist = list
+
+            if ( list.size<=4) nlist = list
+            else {
+                var listpom= ArrayList<Double>()
+                for (i in 3 downTo 0 step 1) {
+                    listpom.add(list.get(list.lastIndex-i))
+
+                }
+
+                nlist=listpom
+            }
             precNum = prec
 
         }
@@ -246,9 +250,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun getCount(): Int {
-            //return 5
-            return nlist.size
-
+           if (nlist.size <=4) return nlist.size
+            else {
+                return 4
+           }
         }
     }
 

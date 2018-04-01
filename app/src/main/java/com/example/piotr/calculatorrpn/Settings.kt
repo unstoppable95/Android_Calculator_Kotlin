@@ -2,14 +2,11 @@ package com.example.piotr.calculatorrpn
 
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Color.CYAN
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
-
 import kotlinx.android.synthetic.main.activity_settings.*
-import android.widget.Toast
 import android.widget.RadioButton
 import android.widget.RadioGroup
 
@@ -19,7 +16,7 @@ import android.widget.RadioGroup
 class Settings : AppCompatActivity() {
 
     var precision: Int=0
-    var colorBackgroundStack: String = ""
+    var colorBackgroundStack: String = "#faf7e5"
     var colorBackgroundLayout : String = ""
 
 
@@ -66,7 +63,9 @@ class Settings : AppCompatActivity() {
             intent.putExtra("stosReceive", stos)
             //kolor tla
             //precyzja
+            if (!editPrec.getText().toString().equals(""))
             precision =editPrec.getText().toString().toInt()
+            else precision = 2
             intent.putExtra("precision", precision)
             //color stosu
             intent.putExtra("backColor" ,colorBackgroundLayout )
@@ -77,7 +76,7 @@ class Settings : AppCompatActivity() {
 
         val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         radioGroup.orientation = RadioGroup.VERTICAL
-
+        radioGroup.check(radioButton4.getId());
 
         radioGroup.setOnCheckedChangeListener({
             radioGroup, checkedId ->  val radioButton= findViewById<RadioButton>(checkedId)
@@ -85,6 +84,7 @@ class Settings : AppCompatActivity() {
              "Fioletowy" ->{  colorBackgroundStack="#8080ff"}
                 "Morski" ->{colorBackgroundStack="#00ffff"}
                 "Koralowy"-> {colorBackgroundStack="#ff7f50"}
+                "Wrzosowy" -> {colorBackgroundStack="#faf7e5"}
 
             }
 
