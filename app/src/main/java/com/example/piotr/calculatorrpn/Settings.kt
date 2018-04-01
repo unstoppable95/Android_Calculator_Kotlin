@@ -21,6 +21,7 @@ class Settings : AppCompatActivity() {
 
 
     lateinit var editPrec : EditText
+    lateinit var option: Spinner
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,15 +30,18 @@ class Settings : AppCompatActivity() {
 
         editPrec= findViewById(R.id.editPrec)
 
-        val spinner = findViewById<View>(R.id.spinner1) as Spinner
-        val elementy = arrayOf("Pomarańczowy", "Szary", "Pudrowy róż", "Zielony", "Błękitny")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, elementy)
-        spinner.adapter = adapter
 
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
-            override  fun onItemSelected(arg0: AdapterView<*>, arg1: View, id: Int, position: Long) {
+        option = findViewById(R.id.spinner1)
+        val colors = arrayOf("Pomarańczowy", "Szary", "Pudrowy róż", "Zielony", "Błękitny")
+        option.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, colors)
 
+        option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 when (position.toInt()) {
                     0 -> {
                         colorBackgroundLayout="#ff7f00"
@@ -51,8 +55,6 @@ class Settings : AppCompatActivity() {
                     4 -> {colorBackgroundLayout="#00ccff"
                     }
                 }
-            }
-            override fun onNothingSelected(arg0: AdapterView<*>) {
             }
         }
 
@@ -74,7 +76,7 @@ class Settings : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
+        var radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
         radioGroup.orientation = RadioGroup.VERTICAL
         radioGroup.check(radioButton4.getId());
 
