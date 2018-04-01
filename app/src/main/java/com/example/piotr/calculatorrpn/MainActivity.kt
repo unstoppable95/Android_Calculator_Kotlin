@@ -14,35 +14,36 @@ import java.util.function.DoubleBinaryOperator
 import android.widget.RelativeLayout
 import android.graphics.Color.parseColor
 import android.app.Activity
+import android.icu.text.NumberFormat
 import android.util.Log
+import java.math.RoundingMode
 
 
 class MainActivity : AppCompatActivity() {
 
     var stack = Stack()
-
-
+    var prec :Int = 1
+    var backgroundLayoutColor: String =""
+    var backgroundStackColor : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        Screen.setBackgroundColor(android.graphics.Color.YELLOW)
+
 
         //wysylane przez settings
         val bundle=intent.extras
-        var samplename:String
         if(bundle!=null)
-        {
-            samplename = bundle.getString("color")
-
-            Screen.setBackgroundColor(Color.parseColor(samplename))
-
-            //powrot z aktywnosci setting
+        {   //powrot z aktywnosci setting
+            prec = bundle.getInt("precision")
+            backgroundLayoutColor= bundle.getString("backColor")
             stack =getIntent().getSerializableExtra("stosReceive") as Stack
+            Screen.setBackgroundColor(Color.parseColor(backgroundLayoutColor))
+            backgroundStackColor= bundle.getString("stackColor")
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
+            listView.setBackgroundColor(Color.parseColor(backgroundStackColor))
             textView.text=stack.listTmp.joinToString(separator = "")
-
         }
 
         //obsluga guzikow
@@ -98,7 +99,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.listTmp.size==0 && stack.list.lastIndex>=0 ){
                 stack.list.add(stack.list.get(stack.list.lastIndex))
                 val listView = findViewById<ListView>(R.id.listView)
-                listView.adapter = MyCustomAdapter(this, stack.list)
+                listView.adapter = MyCustomAdapter(this, stack.list,prec)
                 textView.text=stack.listTmp.joinToString(separator = "")
             }
             else if (stack.listTmp.size!=0  ){
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 stack.list.add(y.toDouble())
                 stack.listTmp.clear()
                 val listView = findViewById<ListView>(R.id.listView)
-                listView.adapter = MyCustomAdapter(this, stack.list)
+                listView.adapter = MyCustomAdapter(this, stack.list,prec)
                 textView.text=stack.listTmp.joinToString(separator = "")
             }
         }
@@ -116,7 +117,7 @@ class MainActivity : AppCompatActivity() {
            if(stack.list.lastIndex>=1)
            stack.addiction(stack)
            val listView = findViewById<ListView>(R.id.listView)
-           listView.adapter = MyCustomAdapter(this, stack.list)
+           listView.adapter = MyCustomAdapter(this, stack.list,prec)
        }
         buttonMinus.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -124,7 +125,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=1)
             stack.subtraction(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonMultiply.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -132,7 +133,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=1)
             stack.multiplication(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonDivision.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -140,7 +141,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=1)
             stack.division(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonSqrt.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -148,7 +149,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=0)
             stack.sqrt(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonPow.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -156,13 +157,13 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=1)
             stack.pow(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonAC.setOnClickListener(){
             stack.list.clear()
             stack.listTmp.clear()
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
             textView.text=stack.listTmp.joinToString(separator = "")
         }
         buttonDrop.setOnClickListener(){
@@ -171,7 +172,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=0)
             stack.drop(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonSwap.setOnClickListener(){
             val listHelp = stack.list.clone() as ArrayList<Double>
@@ -179,7 +180,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=1)
             stack.swap(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonPlusMinus.setOnClickListener(){
             val listHelp = stack.list.clone()  as ArrayList<Double>
@@ -187,7 +188,7 @@ class MainActivity : AppCompatActivity() {
             if(stack.list.lastIndex>=0)
             stack.plusMinus(stack)
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonDel.setOnClickListener(){
             if(stack.listTmp.lastIndex>=0)
@@ -200,7 +201,7 @@ class MainActivity : AppCompatActivity() {
                 stack.list.addAll(stack.History.get(stack.History.lastIndex))
             stack.History.removeAt(stack.History.lastIndex)}
             val listView = findViewById<ListView>(R.id.listView)
-            listView.adapter = MyCustomAdapter(this, stack.list)
+            listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonMenu.setOnClickListener(){
             val intent = Intent(this,Settings::class.java)
@@ -213,18 +214,26 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private class MyCustomAdapter(context: Context, list: ArrayList<Double>): BaseAdapter() {
+    private class MyCustomAdapter(context: Context, list: ArrayList<Double>, prec: Int): BaseAdapter() {
 
         private val nContext: Context
         private val nlist: ArrayList<Double>
+        private val precNum :Int
         init{
             nContext = context
             nlist = list
+            precNum = prec
 
         }
+        fun Double.format(digits: Int) = java.lang.String.format("%.${digits}f", this)
+
         override fun getView(position: Int, convertView: View?, viewGroup: ViewGroup?): View {
             val textView = TextView(nContext)
-            textView.text = "$position: ${nlist.get(position)}"
+            val x = nlist.get(position)
+            val y = x.format(precNum)
+
+            textView.text = "$position: ${y}"
+
             return textView
         }
 
