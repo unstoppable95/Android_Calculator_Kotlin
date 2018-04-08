@@ -72,6 +72,7 @@ class Settings : AppCompatActivity() {
             //color stosu
             intent.putExtra("backColor" ,colorBackgroundLayout )
             intent.putExtra("stackColor" ,colorBackgroundStack )
+            intent.putExtra("back", 1)
             //start main activity
             startActivity(intent)
         }

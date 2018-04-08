@@ -11,14 +11,11 @@
         android:id="@+id/buttonZero"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="108dp"
-        android:layout_marginStart="108dp"
         android:layout_marginTop="460dp"
         android:text="0"
-        app:layout_constraintEnd_toStartOf="@+id/buttonDot"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/buttonUndo"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonPow"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -190,14 +187,11 @@
         android:id="@+id/buttonPow"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="52dp"
-        android:layout_marginStart="52dp"
         android:layout_marginTop="460dp"
         android:text="a ᶰ"
         app:layout_constraintEnd_toStartOf="@+id/buttonZero"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/buttonDel"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -285,7 +279,7 @@
         android:layout_marginTop="460dp"
         android:text="←"
         app:layout_constraintEnd_toStartOf="@+id/buttonPow"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -293,14 +287,11 @@
         android:id="@+id/buttonMenu"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="304dp"
-        android:layout_marginStart="304dp"
         android:layout_marginTop="460dp"
         android:text="Menu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonUndo"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonDot"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
@@ -321,14 +312,11 @@
         android:id="@+id/buttonDot"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="172dp"
-        android:layout_marginStart="172dp"
         android:layout_marginTop="460dp"
         android:text="."
-        app:layout_constraintEnd_toStartOf="@+id/buttonUndo"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonZero"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonMenu"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonUndo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ListView
@@ -360,14 +348,11 @@
         android:id="@+id/buttonUndo"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="236dp"
-        android:layout_marginStart="236dp"
         android:layout_marginTop="460dp"
         android:text="Undo"
-        app:layout_constraintEnd_toStartOf="@+id/buttonMenu"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/buttonDot"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonDot"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/buttonZero"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

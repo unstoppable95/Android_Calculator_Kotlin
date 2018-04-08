@@ -9,6 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import kotlinx.android.synthetic.main.activity_main.*
+import android.os.Process.myPid
+import android.os.Process.killProcess
+
+
 
 
 
@@ -16,33 +20,63 @@ class MainActivity : AppCompatActivity() {
 
     var stack = Stack()
     var prec :Int = 2
-    var backgroundLayoutColor: String =""
-    var backgroundStackColor : String = ""
+    var backgroundLayoutColor: String ="#faf7e5"
+    var backgroundStackColor : String = "#faf7a3"
+    var backFromSett : Int =0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         //wysylane przez settings
-        val bundle=intent.extras
-        if(bundle!=null)
+        var bundle=intent.extras
+
+
+        backFromSett = getIntent().getIntExtra("back",0)
+
+        if(backFromSett==1)
         {   //powrot z aktywnosci setting
             prec = bundle.getInt("precision")
             backgroundLayoutColor= bundle.getString("backColor")
             stack =getIntent().getSerializableExtra("stosReceive") as Stack
             Screen.setBackgroundColor(Color.parseColor(backgroundLayoutColor))
-            backgroundStackColor= bundle.getString("stackColor")
-            val listView = findViewById<ListView>(R.id.listView)
+           backgroundStackColor= bundle.getString("stackColor")
+           val listView = findViewById<ListView>(R.id.listView)
             listView.adapter = MyCustomAdapter(this, stack.list,prec)
             listView.setBackgroundColor(Color.parseColor(backgroundStackColor))
             textView.text=stack.listTmp.joinToString(separator = "")
         }
 
-        //obsluga guzikow
         buttonsClick()
 
+
     }
+
+    override  public fun onDestroy() {
+        super.onDestroy()
+
+
+    }
+
+
+     override public fun onPause() {
+        super.onPause()
+    }
+
+
+     override public fun onSaveInstanceState(savedInstanceState: Bundle?) {
+        savedInstanceState!!.putSerializable("Stos save", stack)
+        super.onSaveInstanceState(savedInstanceState)
+    }
+
+     override public fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        stack = savedInstanceState!!.getSerializable("Stos save") as Stack
+        textView.text=stack.listTmp.joinToString(separator = "")
+        listView.adapter = MyCustomAdapter(this, stack.list,prec)
+    }
+
     fun buttonsClick(){
         buttonZero.setOnClickListener{
             stack.listTmp.add("0")
@@ -189,8 +223,10 @@ class MainActivity : AppCompatActivity() {
             textView.text=stack.listTmp.joinToString(separator = "")
         }
         buttonUndo.setOnClickListener(){
-            stack.list.clear()
-            if(stack.History.lastIndex>=1){
+
+
+            if(stack.History.lastIndex>=0){
+                stack.list.clear()
                 stack.list.addAll(stack.History.get(stack.History.lastIndex))
             stack.History.removeAt(stack.History.lastIndex)}
             val listView = findViewById<ListView>(R.id.listView)
