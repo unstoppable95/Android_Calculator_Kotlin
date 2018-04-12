@@ -20,50 +20,41 @@ class MainActivity : AppCompatActivity() {
 
     var stack = Stack()
     var prec :Int = 2
-    var backgroundLayoutColor: String ="#faf7e5"
-    var backgroundStackColor : String = "#faf7a3"
+    var backgroundLayoutColor: String =""
+    var backgroundStackColor : String = ""
     var backFromSett : Int =0
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         //wysylane przez settings
         var bundle=intent.extras
-
-
         backFromSett = getIntent().getIntExtra("back",0)
-
         if(backFromSett==1)
         {   //powrot z aktywnosci setting
             prec = bundle.getInt("precision")
             backgroundLayoutColor= bundle.getString("backColor")
             stack =getIntent().getSerializableExtra("stosReceive") as Stack
+            backgroundStackColor= bundle.getString("stackColor")
             Screen.setBackgroundColor(Color.parseColor(backgroundLayoutColor))
-           backgroundStackColor= bundle.getString("stackColor")
-           val listView = findViewById<ListView>(R.id.listView)
+            val listView = findViewById<ListView>(R.id.listView)
             listView.adapter = MyCustomAdapter(this, stack.list,prec)
             listView.setBackgroundColor(Color.parseColor(backgroundStackColor))
             textView.text=stack.listTmp.joinToString(separator = "")
         }
-
         buttonsClick()
-
-
     }
 
     override  public fun onDestroy() {
         super.onDestroy()
-
-
     }
 
 
      override public fun onPause() {
         super.onPause()
     }
-
 
      override public fun onSaveInstanceState(savedInstanceState: Bundle?) {
         savedInstanceState!!.putSerializable("Stos save", stack)
@@ -223,8 +214,6 @@ class MainActivity : AppCompatActivity() {
             textView.text=stack.listTmp.joinToString(separator = "")
         }
         buttonUndo.setOnClickListener(){
-
-
             if(stack.History.lastIndex>=0){
                 stack.list.clear()
                 stack.list.addAll(stack.History.get(stack.History.lastIndex))
@@ -233,13 +222,10 @@ class MainActivity : AppCompatActivity() {
             listView.adapter = MyCustomAdapter(this, stack.list,prec)
         }
         buttonMenu.setOnClickListener(){
-            val intent = Intent(this,Settings::class.java)
+           val intent = Intent(this,Settings::class.java)
             intent.putExtra("stosSave", stack)
             startActivity(intent)
         }
-
-
-
 
     }
 

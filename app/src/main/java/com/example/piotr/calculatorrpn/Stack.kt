@@ -4,9 +4,11 @@ import java.io.Serializable
 
 
 class Stack : Serializable {
-
+    //aktualny stos
     var list = ArrayList<Double>()
+    //zawartosc editText (work - field)
     var listTmp = ArrayList<String>()
+    //lista historii operacji wykonanych na stosie
     var History = ArrayList<ArrayList<Double>>()
 
     fun addiction( stack : Stack){
@@ -44,9 +46,10 @@ class Stack : Serializable {
     }
     fun sqrt(stack : Stack){
         val a = stack.list.get(stack.list.lastIndex)
+        if(a>=0){
         val result = Math.sqrt(a)
         stack.list.removeAt(stack.list.lastIndex)
-        stack.list.add(result)
+        stack.list.add(result)}
     }
     fun pow(stack:Stack) {
         val a = stack.list.get(stack.list.lastIndex) //potega

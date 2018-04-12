@@ -61,7 +61,7 @@ class Settings : AppCompatActivity() {
         buttonAccept.setOnClickListener{
             //odebranie stosu i odeslanie spowrotem do main
             val intent = Intent(this,MainActivity::class.java)
-            var stos=getIntent().getSerializableExtra("stosSave") as Stack
+           var stos=getIntent().getSerializableExtra("stosSave") as Stack
             intent.putExtra("stosReceive", stos)
             //kolor tla
             //precyzja
