@@ -33,7 +33,7 @@ class Settings : AppCompatActivity() {
 
 
         option = findViewById(R.id.spinner1)
-        val colors = arrayOf("Pomarańczowy", "Szary", "Pudrowy róż", "Zielony", "Błękitny")
+        val colors = arrayOf("Żółty", "Szary", "Pudrowy róż", "Zielony", "Błękitny")
         option.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, colors)
 
         option.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -44,7 +44,7 @@ class Settings : AppCompatActivity() {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
                 when (position.toInt()) {
                     0 -> {
-                        colorBackgroundLayout="#ff7f00"
+                        colorBackgroundLayout="#d9d919"
                     }
                     1 -> {colorBackgroundLayout="#9c9c9c"
                     }
